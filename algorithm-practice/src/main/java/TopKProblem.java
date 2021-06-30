@@ -1,5 +1,8 @@
 import java.util.PriorityQueue;
 
+/**
+ *  https://mp.weixin.qq.com/s/mTFlRh7jNn_84UhYnQv1fw
+ */
 public class TopKProblem {
 
     /*
@@ -10,8 +13,10 @@ public class TopKProblem {
       依此往复，直至扫描完所有元素
      */
     public static void main(String[] args) {
-        int[] nums = new int[] {20, 10, 30, 50, 80};
-        System.out.println(findKthLargest(nums, 1));
+        int[] nums = new int[] {20, 10, 30, 50, 80, 60};
+        System.out.println(findKthLargest(nums, 3));
+        long[] qs = new long[]{20, 10, 30, 50, 80, 60};
+        System.out.println(quickSelect(qs, 0, 5, 3));
     }
 
     public static int findKthLargest(int[] nums, int k) {
@@ -28,6 +33,37 @@ public class TopKProblem {
             }
         }
         return minQueue.peek();
+    }
+
+    public static long quickSelect(long[] nums, int start, int end, int k) {
+        if (start == end) {
+            return nums[start];
+        }
+        int left = start;
+        int right = end;
+        long pivot = nums[(start + end) / 2];
+        while (left <= right) {
+            while (left <= right && nums[left] > pivot) {
+                left++;
+            }
+            while (left <= right && nums[right] < pivot) {
+                right--;
+            }
+            if (left <= right) {
+                long temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        if (start + k - 1 <= right) {
+            return quickSelect(nums, start, right, k);
+        }
+        if (start + k - 1 >= left) {
+            return quickSelect(nums, left, end, k - (left - start));
+        }
+        return nums[right + 1];
     }
 
 }
