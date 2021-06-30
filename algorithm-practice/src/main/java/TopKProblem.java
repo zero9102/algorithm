@@ -11,7 +11,7 @@ public class TopKProblem {
      */
     public static void main(String[] args) {
         int[] nums = new int[] {20, 10, 30, 50, 80};
-        System.out.println(findKthLargest(nums, 3));
+        System.out.println(findKthLargest(nums, 1));
     }
 
     public static int findKthLargest(int[] nums, int k) {
